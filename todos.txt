@@ -1,0 +1,15 @@
+Last steps:
+ - Write devs documentation
+ - Write tests
+
+###########################################################################
+
+Next Version:
+ - HATEOAS (index with links and metadata)
+ - XmlEncoder
+ - generate metadata for several namespaces
+ - Abstract PlainObjects with discriminator fields
+ - What happens if a type is array of arrays?
+ - PlainObjectConverter: error handling with nested properties
+ - Use RegEx to get docComment text (DocCommentParser:38)
+ - ServiceController: handle multiple RequestExceptions
