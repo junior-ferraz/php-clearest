@@ -60,19 +60,19 @@ class RouterBuilder
                     $serviceMethod = $entry['Method'];
                     $version = isset($entry['Version']) ? $entry['Version'] : null;
                 }
-                if (!interface_exists($serviceName)) {
+                $metadata = MetadataStorage::getClassMetadata($serviceName);
+                /*if (!interface_exists($serviceName)) {
                     throw new FrameworkException(
                         "Cannot set $serviceName for route $method $route: " .
                         "Interface not found"
                     );
-                }
-                if (!is_subclass_of($serviceName, Service::class)) {
+                }*/
+                if (!in_array(Service::class, $metadata->implements)) {
                     throw  new FrameworkException(
                         "Cannot set $serviceName for route $method $route: " .
                         "$serviceName is not a service"
                     );
                 }
-                $metadata = MetadataStorage::getClassMetadata($serviceName);
                 if (!array_key_exists($serviceMethod, $metadata->methods)) {
                     throw New FrameworkException("Unknown method $serviceName:$serviceMethod for $method $route");
                 }

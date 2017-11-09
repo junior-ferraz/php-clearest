@@ -43,6 +43,18 @@ class ServicesIndexGenerator
             }
         }
 
+        $interfaceNames = array_keys($interfaces);
+        foreach ($implementations as $name => $class) {
+            $intersection = array_intersect($interfaceNames, $class->implements);
+            if (empty($intersection)) {
+                $class->annotations[] = new Version(1);
+                $class->versions = [
+                    1 => new ServiceInstance(['class' => $name])
+                ];
+                $interfaces[$name] = $class;
+            }
+        }
+
         foreach ($interfaces as $interface) {
             foreach ($implementations as $class) {
                 if (!in_array($interface->name, $class->implements)) {

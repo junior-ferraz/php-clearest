@@ -4,6 +4,7 @@ namespace CleaRest\Api\Data;
 use CleaRest\Api\Exceptions\InternalException;
 use CleaRest\Api\Exceptions\RequestException;
 use CleaRest\Metadata\Descriptors\Clazz;
+use CleaRest\Metadata\MetadataStorage;
 
 /**
  * Helper class to create PlainObjects out of an array (with its class metadata) and vice-versa
@@ -90,6 +91,22 @@ class PlainObjectConverter
         }
 
         return $array;
+    }
+
+    /**
+     * Creates a new instance of $class and copies properties of it from $object
+     *
+     * @param PlainObject $object to convert
+     * @param string|Clazz $class destiny type
+     *
+     * @return PlainObject
+     */
+    public static function cast(PlainObject $object, $class)
+    {
+        if (!$class instanceof Clazz) {
+            $class = MetadataStorage::getClassMetadata($class);
+        }
+        return self::toObject(self::toArray($object), $class);
     }
 
     /**
